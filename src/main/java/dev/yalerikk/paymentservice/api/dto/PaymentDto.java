@@ -7,7 +7,7 @@ public record PaymentDto (
     Long id,
     Long userId,
     BigDecimal amount,
-    String name,
+    String status,
     LocalDateTime createdAt,
     LocalDateTime updatedAt
 ) {
