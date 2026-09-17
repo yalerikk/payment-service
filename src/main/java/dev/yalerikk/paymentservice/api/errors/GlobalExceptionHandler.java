@@ -81,9 +81,9 @@ public class GlobalExceptionHandler {
                 .body(body);
     }
 
-    @ExceptionHandler(PaymentNotFoundException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiError> handleNotFound(
-            PaymentNotFoundException exception,
+            ResourceNotFoundException exception,
             HttpServletRequest request
     ) {
         LOG.error("Handling exception", exception);
@@ -115,6 +115,22 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(body);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<ApiError> handleUserAlreadyExists(
+            UserAlreadyExistsException exception,
+            HttpServletRequest request
+    ) {
+        LOG.warn("User already exists: {}", exception.getMessage());
+        ApiError body = new ApiError(
+                LocalDateTime.now(),
+                HttpStatus.CONFLICT.value(),
+                "Conflict",
+                exception.getMessage(),
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(body);
     }
 
     @ExceptionHandler(Exception.class)
