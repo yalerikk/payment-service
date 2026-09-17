@@ -3,7 +3,7 @@ package dev.yalerikk.paymentservice.domain;
 import dev.yalerikk.paymentservice.api.dto.CreatePaymentRequest;
 import dev.yalerikk.paymentservice.api.dto.PaymentDto;
 import dev.yalerikk.paymentservice.api.errors.InvalidPaymentStateException;
-import dev.yalerikk.paymentservice.api.errors.PaymentNotFoundException;
+import dev.yalerikk.paymentservice.api.errors.ResourceNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,14 +18,19 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final PaymentMapper mapper;
+    private final UserRepository userRepository;
 
-    public PaymentService(PaymentRepository paymentRepository, PaymentMapper mapper) {
+    public PaymentService(PaymentRepository paymentRepository, PaymentMapper mapper, UserRepository userRepository) {
         this.paymentRepository = paymentRepository;
         this.mapper = mapper;
+        this.userRepository = userRepository;
     }
 
     @Transactional
     public PaymentDto createPayment(CreatePaymentRequest request) {
+        if (!userRepository.existsById(request.userId())) {
+            throw new ResourceNotFoundException("User", request.userId());
+        }
         if (request.amount().compareTo(MAX_AMOUNT) > 0) {
             throw new InvalidPaymentStateException("Amount is too large");
         }
@@ -54,6 +59,6 @@ public class PaymentService {
 
     private PaymentEntity findPaymentOrThrow(Long id) {
         return paymentRepository.findById(id)
-                .orElseThrow(() -> new PaymentNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Payment", id));
     }
 }
