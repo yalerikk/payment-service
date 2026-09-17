@@ -4,6 +4,11 @@ import dev.yalerikk.paymentservice.api.dto.CreatePaymentRequest;
 import dev.yalerikk.paymentservice.api.dto.PaymentDto;
 import dev.yalerikk.paymentservice.api.errors.InvalidPaymentStateException;
 import dev.yalerikk.paymentservice.api.errors.ResourceNotFoundException;
+import dev.yalerikk.paymentservice.domain.db.PaymentEntity;
+import dev.yalerikk.paymentservice.domain.db.PaymentRepository;
+import dev.yalerikk.paymentservice.domain.db.UserRepository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +25,8 @@ public class PaymentService {
     private final PaymentMapper mapper;
     private final UserRepository userRepository;
 
-    public PaymentService(PaymentRepository paymentRepository, PaymentMapper mapper, UserRepository userRepository) {
+    public PaymentService(PaymentRepository paymentRepository, PaymentMapper mapper,
+                          UserRepository userRepository) {
         this.paymentRepository = paymentRepository;
         this.mapper = mapper;
         this.userRepository = userRepository;
@@ -40,11 +46,13 @@ public class PaymentService {
         return mapper.toDomain(saved);
     }
 
+    @Cacheable(cacheNames = "payments", key = "#id")
     public PaymentDto getPayment(Long id) {
         PaymentEntity payment = findPaymentOrThrow(id);
         return mapper.toDomain(payment);
     }
 
+    @CacheEvict(cacheNames = "payments", key = "#id")
     @Transactional
     public PaymentDto confirmPayment(Long id) {
         PaymentEntity payment = findPaymentOrThrow(id);

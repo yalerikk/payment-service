@@ -1,5 +1,6 @@
-package dev.yalerikk.paymentservice.domain;
+package dev.yalerikk.paymentservice.domain.db;
 
+import dev.yalerikk.paymentservice.domain.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

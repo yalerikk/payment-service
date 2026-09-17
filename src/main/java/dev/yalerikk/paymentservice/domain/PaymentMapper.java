@@ -1,6 +1,7 @@
 package dev.yalerikk.paymentservice.domain;
 
 import dev.yalerikk.paymentservice.api.dto.PaymentDto;
+import dev.yalerikk.paymentservice.domain.db.PaymentEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

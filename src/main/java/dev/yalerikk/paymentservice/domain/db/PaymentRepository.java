@@ -1,4 +1,4 @@
-package dev.yalerikk.paymentservice.domain;
+package dev.yalerikk.paymentservice.domain.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -4,6 +4,8 @@ import dev.yalerikk.paymentservice.api.dto.CreateUserRequest;
 import dev.yalerikk.paymentservice.api.dto.UserDto;
 import dev.yalerikk.paymentservice.api.errors.ResourceNotFoundException;
 import dev.yalerikk.paymentservice.api.errors.UserAlreadyExistsException;
+import dev.yalerikk.paymentservice.domain.db.UserEntity;
+import dev.yalerikk.paymentservice.domain.db.UserRepository;
 import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,8 +39,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<UserDto> getAllUsers() {
-        // TODO: N+1 problem
-        return userRepository.findAll().stream()
+        return userRepository.findAllWithPayments().stream()
                 .map(mapper::toDomain)
                 .toList();
     }

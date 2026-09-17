@@ -1,4 +1,4 @@
-package dev.yalerikk.paymentservice.domain;
+package dev.yalerikk.paymentservice.domain.db;
 
 import jakarta.persistence.*;
 import lombok.*;
