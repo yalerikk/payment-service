@@ -1,6 +1,17 @@
 databaseChangeLog:
-  - includeAll:
+  - include:
       author: yalerikk
-      file: classpath:db/changelog/sql
+      file: db/changelog/sql/001-create-payments.sql
       relativeToChangelogFile: false
       errorIfMissingOrEmpty: true
+  - include:
+      author: yalerikk
+      file: db/changelog/sql/002-create-users.sql
+      relativeToChangelogFile: false
+      errorIfMissingOrEmpty: true
+  - include:
+      author: yalerikk
+      file: db/changelog/seed/001-seed-data.sql
+      relativeToChangelogFile: false
+      errorIfMissingOrEmpty: true
+      context: dev
