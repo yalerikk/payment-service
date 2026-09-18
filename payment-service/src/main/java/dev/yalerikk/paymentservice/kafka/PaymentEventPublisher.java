@@ -1,9 +1,7 @@
 package dev.yalerikk.paymentservice.kafka;
 
-/*
-import dev.yalerikk.paymentservice.kafka.PaymentEvent;
-import dev.yalerikk.paymentservice.kafka.PaymentEventType;
- */
+import dev.yalerikk.common.events.PaymentEvent;
+import dev.yalerikk.common.events.PaymentEventType;
 import dev.yalerikk.paymentservice.domain.db.PaymentEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

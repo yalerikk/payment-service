@@ -1,4 +1,4 @@
-package dev.yalerikk.paymentservice.kafka;
+package dev.yalerikk.common.events;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

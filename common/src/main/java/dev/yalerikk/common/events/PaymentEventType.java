@@ -1,4 +1,4 @@
-package dev.yalerikk.paymentservice.kafka;
+package dev.yalerikk.common.events;
 
 public enum PaymentEventType {
     PAYMENT_CREATED,
