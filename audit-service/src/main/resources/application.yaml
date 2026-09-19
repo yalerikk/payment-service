@@ -5,6 +5,21 @@ spring:
   application:
     name: audit-service
 
+  datasource:
+    url: jdbc:postgresql://localhost:5432/audit
+    username: postgres
+    password: postgres
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    show-sql: true
+
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/changelog-master.yaml
+
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
